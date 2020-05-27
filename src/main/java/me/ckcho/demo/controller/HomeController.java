@@ -1,6 +1,6 @@
 package me.ckcho.demo.controller;
 
-import java.util.Locale;
+//import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -19,7 +19,7 @@ public class HomeController {
     @RequestMapping("/")
     public String home(){
         log.info("############## HomeController home ################");
-        log.info("############## "+ messageSource.getMessage("notempty", null, Locale.KOREA));
+        //log.info("############## "+ messageSource.getMessage("notempty", null, Locale.KOREA));
 
         return "home";
     }
