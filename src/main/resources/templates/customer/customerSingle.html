@@ -1,0 +1,233 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Customer</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+<script type="text/javascript" src="/js/jquery-3.5.1.min.js"></script>
+<style>
+
+#containerForm{
+    max-width: none;
+    width: 100%;
+}
+#shadowForm{
+    width:100%;
+}
+
+.input-group{
+    margin: 10px;
+}
+
+.input-group-prepend{
+    width:200px;
+}
+
+.input-group-text{
+    width:100%;
+}
+
+label{
+    margin: 0px;
+    width: 100%;
+    text-align: left;    
+}
+
+.spanFormLabel{
+    width : 100%;
+}
+
+.form-control{
+    height: 46px;
+}
+
+.fieldError {
+    border-color: #bd2130;
+}
+
+.alert-danger{
+    margin: 10px;
+    width: 100%;
+}
+
+.divRadio{
+    width:auto;
+    padding : 5px 5px 5px 10px;
+
+}
+</style>
+</head>
+<body>
+    <div class="container-fluid">
+        <h3>고객 등록</h3>
+    </div>
+    <div class="container" id="containerForm">
+        <div class="row">
+            <div class="card shadow" id="shadowForm">
+                <div class="card-body">
+                    <form role="form" action="/customer/save" th:object="${customerForm}" method="post">
+                        <!-- 고객명 -->
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><label th:for="name">고객명</label></span>
+                            </div>
+                            <input type="text" th:value="*{name}" th:field="*{name}" class="form-control" th:class="${#fields.hasErrors('name')}?'form-control fieldError' : 'form-control'">
+                        </div>
+                        <div class="alert alert-danger" role="alert"  th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+
+                        <!-- 고객구분 -->
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><label th:for="custTypeCode">고객 구분</label></span>
+                            </div>
+                            <div class="divRadio" th:value="*{custTypeCode}" th:field="*{custTypeCode}" id="custTypeControl">
+                                <input type="radio" name="custTypeCode" value="PERSON"  th:checked="${custTypeCode  == 'PERSON'}"> 개인고객</input>
+                                <input type="radio" name="custTypeCode" value="COMPANY" th:checked="${custTypeCode == 'COMPANY'}"> 법인고객</input>
+                            </div>                            
+                        </div>
+                        <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('custTypeCode')}" th:errors="*{custTypeCode}"></div>
+
+                        <!-- 회선수량 -->
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><label th:for="qty">회선수량</label></span>
+                            </div>
+                            <input type="text" th:value="*{qty}" th:field="*{qty}" class="form-control" th:class="${#fields.hasErrors('qty')}? 'form-control fieldError' : 'form-control'">
+                        </div>
+                        <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('qty')}" th:errors="*{qty}"></div>
+
+                        <!-- City -->
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><label th:for="city">City</label></span>
+                            </div>
+                            <input type="text" th:value="*{city}" th:field="*{city}" class="form-control" th:class="${#fields.hasErrors('city')}? 'form-control fieldError' : 'form-control'">
+                        </div>
+                        <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></div>
+
+                        <!-- Street -->
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><label th:for="street">Street</label></span>
+                            </div>
+                            <input type="text" th:value="*{street}" th:field="*{street}" class="form-control" th:class="${#fields.hasErrors('street')}? 'form-control fieldError' : 'form-control'">
+                        </div>
+                        <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('street')}" th:errors="*{street}"></div>
+
+                        <!-- Zipcode -->
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><label th:for="zipcode">Zipcode</label></span>
+                            </div>
+                            <input type="text" th:value="*{zipcode}" th:field="*{zipcode}" class="form-control" th:class="${#fields.hasErrors('zipcode')}? 'form-control fieldError' : 'form-control'">
+                        </div>
+                        <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('zipcode')}" th:errors="*{zipcode}"></div>
+
+                        <div id="personArea" style="display: none;">
+                        <!-- <div id="personArea"> -->
+                            <!-- 주민등록번호 -->
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><label th:for="securityNo">주민등록번호</label></span>
+                                </div>
+                                <input type="text" th:value="*{securityNo}" th:field="*{securityNo}" class="form-control" th:class="${#fields.hasErrors('securityNo')} ? 'form-control fieldError' : 'form-control'">
+                            </div>
+                            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('securityNo')}" th:errors="*{securityNo}"></div>
+
+                            <!-- 휴대폰번호 -->
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><label th:for="mobileNo">휴대폰번호</label></span>
+                                </div>
+                                <input type="text" th:value="*{mobileNo}" th:field="*{mobileNo}" class="form-control" th:class="${#fields.hasErrors('mobileNo')} ? 'form-control fieldError' : 'form-control'">
+                            </div>
+                            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('mobileNo')}" th:errors="*{mobileNo}"></div>
+                        </div>
+
+
+                        <div id="companyArea" style="display: none;">
+                        <!-- <div id="companyArea"> -->
+                            <!-- 사업자등록번호 -->
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><label th:for="corporateNo">사업자등록번호</label></span>
+                                </div>
+                                <input type="text" th:value="*{corporateNo}" th:field="*{corporateNo}" class="form-control" th:class="${#fields.hasErrors('corporateNo')} ? 'form-control fieldError' : 'form-control'">
+                            </div>
+                            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('corporateNo')}" th:errors="*{corporateNo}"></div>
+
+                            <!-- 대표자명 -->
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><label th:for="ceoName">대표자명</label></span>
+                                </div>
+                                <input type="text" th:value="*{ceoName}" th:field="*{ceoName}" class="form-control" th:class="${#fields.hasErrors('ceoName')} ? 'form-control fieldError' : 'form-control'">
+                            </div>
+                            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('ceoName')}" th:errors="*{ceoName}"></div>
+
+                            <!-- 회사전화번호 -->
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><label th:for="telNo">회사전화번호</label></span>
+                                </div>
+                                <input type="text" th:value="*{telNo}" th:field="*{telNo}" class="form-control" th:class="${#fields.hasErrors('telNo')} ? 'form-control fieldError' : 'form-control'">
+                            </div>
+                            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('telNo')}" th:errors="*{telNo}"></div>
+                        </div>
+                        
+                        <input type="hidden" th:value="*{id}" th:field="*{id}">
+                        <div class="input-group">
+                            <button type="submit" class="btn btn-primary">저장</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</body>
+<script>
+$(document).ready(function() {
+
+
+
+    $('input[name=custTypeCode]').on('change', function(e){
+        debugger;
+        if($('input[name=id]').val() && $('input[name=id]').val() != 0){
+            return false;
+        }        
+
+        if(e.target.value == 'COMPANY'){
+            $('#personArea').hide();
+            $('#companyArea').show();
+        }else if(e.target.value == 'PERSON'){
+            $('#personArea').show();
+            $('#companyArea').hide();
+        }else{
+            $('#personArea').hide();
+            $('#companyArea').hide();
+        }
+    });
+
+    if ($('input[name=custTypeCode]:checked').val() == 'COMPANY') {
+        $('#personArea').hide();
+        $('#companyArea').show();
+
+    }else if($('input[name=custTypeCode]:checked').val() =='PERSON'){
+        $('#personArea').show();
+        $('#companyArea').hide();
+    }else{
+        $('#personArea').hide();
+        $('#companyArea').hide();
+    }
+
+
+    if($('input[name=id]').val() && $('input[name=id]').val() != 0){
+        $('input[name=custTypeCode]').prop('disabled', true);
+    }
+
+    
+});
+</script>
+</html>
